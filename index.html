@@ -17,14 +17,14 @@
 
   <!-- Видео фон -->
   <video id="bg-video" loop muted>
-    <source src="https://sus.qdok.ru/upsetsummer/background.mp4" type="video/mp4" />
+    <source src="background.mp4" type="video/mp4" />
   </video>
 
   <!-- Основной контент -->
   <div class="content hidden">
     <!-- Профиль -->
     <div class="profile-card">
-  <img src="https://sus.qdok.ru/upsetsummer/avatar.jpg" alt="avatar" class="avatar" />
+      <img src="avatar.jpg" alt="avatar" class="avatar" />
       <div class="profile-info">
         <h2 class="name">
           upsetsummer
@@ -60,7 +60,7 @@
         <img src="icons/lastfm.svg" alt="LastFM" class="icon"/>
       </a>
       <a href="https://qdok.ru/efans" target="_blank" class="link exterafans" title="ExteraFans">
-        <img src="https://sus.qdok.ru/upsetsummer/exterafans.png" alt="ExteraFans" />
+        <img src="exterafans.png" alt="ExteraFans" />
       </a>
     </div>
   </div>
@@ -98,7 +98,7 @@
     </button>
   </div>
 
-  <audio id="bg-music" src="https://sus.qdok.ru/upsetsummer/music.mp3" loop></audio>
+  <audio id="bg-music" src="music.mp3" loop></audio>
 
   <script>
     const startScreen = document.getElementById('start-screen');
@@ -189,30 +189,30 @@
     });
 
     // Role tooltips
-    document.addEventListener('DOMContentLoaded', () => {
-      const roleIcons = document.querySelectorAll('.role-icon');
-      const tooltip = document.createElement('div');
-      tooltip.classList.add('tooltip');
-      document.body.appendChild(tooltip);
+document.addEventListener('DOMContentLoaded', () => {
+  const icons = document.querySelectorAll('.role-icon, .verified-icon');
+  const tooltip = document.createElement('div');
+  tooltip.classList.add('tooltip');
+  document.body.appendChild(tooltip);
 
-      roleIcons.forEach(icon => {
-        icon.addEventListener('mouseenter', () => {
-          tooltip.textContent = icon.dataset.role;
-          tooltip.classList.add('show');
-          const rect = icon.getBoundingClientRect();
-          tooltip.style.left = rect.left + rect.width/2 + 'px';
-          tooltip.style.top = rect.top - 20 + 'px';
-        });
-        icon.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
-        icon.addEventListener('mousemove', (e) => {
-          tooltip.style.left = e.pageX + 'px';
-          tooltip.style.top = e.pageY - 20 + 'px';
-        });
-      });
+  icons.forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      tooltip.textContent = icon.dataset.role;
+      tooltip.classList.add('show');
+      const rect = icon.getBoundingClientRect();
+      // Фиксируем подсказку над значком
+      tooltip.style.left = rect.left + rect.width / 2 + 'px';
+      tooltip.style.top = rect.top - 20 + 'px';
     });
-  </script>
+
+    icon.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('show');
+    });
+
+    // Убираем обработчик mousemove, который двигал подсказку
+    // icon.addEventListener('mousemove', ... ) больше не нужен
+  });
+});
+</script>
 </body>
 </html>
-
-
-
