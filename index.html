@@ -15,47 +15,48 @@
     </div>
   </div>
 
-  <!-- Видео фон (загружается по ссылке) -->
-<video id="bg-video" loop muted>
-  <source src="https://r2.guns.lol/f08ff7a2-6a53-4878-a4f7-78db51722939.mp4" type="video/mp4" />
-</video>
+  <!-- Видео фон -->
+  <video id="bg-video" loop muted>
+    <source src="background.mp4" type="video/mp4" />
+  </video>
 
   <!-- Регулятор громкости -->
-  <div class="volume-control">
-    <label for="volume-slider">🔊</label>
+  <div class="volume-control hidden">
+    <button id="mute-btn">
+      <!-- Play (звук включен) -->
+      <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20">
+        <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+      </svg>
+      <!-- Pause/Mute (звук выключен) -->
+      <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20" style="display:none;">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
   </div>
 
   <div class="content hidden">
-
-    <!-- Остров профиля -->
-    <div class="island" id="profile-island">
-      <img src="avatar.jpg" alt="Аватар" class="avatar" />
-      <h1>upsetsummer</h1>
-      <div class="info-line">
-        <p class="description">БЭНГЕР.</p>
-        <div class="country-icon">
-          <svg data-icon="location-dot" class="svg-inline--fa fa-location-dot" role="img"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path fill="currentColor"
-              d="M256 0C167.6 0 96 71.6 96 160c0 124 160 352 160 352s160-228 160-352c0-88.4-71.6-160-160-160zm0 240c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z">
-            </path>
-          </svg>
-          <span>Canada</span>
-        </div>
+    <!-- Профиль -->
+    <div class="profile-card">
+      <img src="avatar.jpg" alt="avatar" class="avatar" />
+      <div class="profile-info">
+        <h2 class="name">
+          upsetsummer
+          <span class="admin-icon">⭐</span>
+        </h2>
+        <p class="bio">БЭНГЕР.</p>
       </div>
     </div>
 
-    <!-- Остров кнопок -->
-    <div class="island buttons">
-      <a href="https://t.me/chilavekrazzz" target="_blank" class="btn">Telegram</a>
-      <a href="https://youtube.com/@upsetsummer" target="_blank" class="btn">YouTube</a>
-      <a href="https://github.com/Interium-IB" target="_blank" class="btn">GitHub</a>
-      <a href="https://ru.namemc.com/profile/festivesummer.1" target="_blank" class="btn">NameMC</a>
-      <a href="https://laby.net/@festivesummer" target="_blank" class="btn">LabyNet</a>
-      <a href="https://last.fm/user/upsetsummer" target="_blank" class="btn">LastFM</a>
+    <!-- Ссылки -->
+    <div class="links">
+      <a href="https://t.me/chilavekrazzz" target="_blank" class="link">Telegram</a>
+      <a href="https://youtube.com/@upsetsummer" target="_blank" class="link">YouTube</a>
+      <a href="https://github.com/Interium-IB" target="_blank" class="link">GitHub</a>
+      <a href="https://ru.namemc.com/profile/festivesummer.1" target="_blank" class="link">NameMC</a>
+      <a href="https://laby.net/@festivesummer" target="_blank" class="link">LabyNet</a>
+      <a href="https://last.fm/user/upsetsummer" target="_blank" class="link">LastFM</a>
     </div>
-
   </div>
 
   <audio id="bg-music" src="music.mp3" loop></audio>
@@ -66,27 +67,76 @@
     const audio = document.getElementById('bg-music');
     const video = document.getElementById('bg-video');
     const volumeSlider = document.getElementById('volume-slider');
+    const volumeControl = document.querySelector('.volume-control');
+    const muteBtn = document.getElementById('mute-btn');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
 
+    let isMuted = false;
+
+    // Стартовый экран
     startScreen.addEventListener('click', () => {
       startScreen.classList.add('fade-out');
       setTimeout(() => {
         startScreen.style.display = 'none';
         content.classList.remove('hidden');
         content.classList.add('fade-in');
-
-        // Запуск видео и музыки после заставки
+        volumeControl.classList.remove('hidden');
         video.play().catch(() => {});
-        audio.volume = 0.3; // фиксированная громкость
+        audio.volume = 0.3;
         audio.play().catch(() => {});
+        updateIcons();
       }, 700);
     });
 
     // Регулировка громкости
     volumeSlider.addEventListener('input', () => {
       audio.volume = volumeSlider.value;
+      if (audio.volume === 0) isMuted = true;
+      else if (!isMuted) isMuted = false;
+      audio.muted = isMuted;
+      updateIcons();
+    });
+
+    // Вкл/выкл звук
+    muteBtn.addEventListener('click', () => {
+      isMuted = !isMuted;
+      audio.muted = isMuted;
+      updateIcons();
+    });
+
+    function updateIcons() {
+      if (isMuted || audio.volume === 0) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      } else {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    // Tooltip админа
+    document.addEventListener('DOMContentLoaded', () => {
+      const adminIcon = document.querySelector('.admin-icon');
+      const tooltip = document.createElement('div');
+      tooltip.classList.add('tooltip');
+      tooltip.textContent = 'Administrator';
+      document.body.appendChild(tooltip);
+
+      adminIcon.addEventListener('mouseenter', () => {
+        tooltip.classList.add('show');
+        const rect = adminIcon.getBoundingClientRect();
+        tooltip.style.left = rect.left + rect.width / 2 + 'px';
+        tooltip.style.top = rect.top + 'px';
+      });
+      adminIcon.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('show');
+      });
+      adminIcon.addEventListener('mousemove', (e) => {
+        tooltip.style.left = e.pageX + 'px';
+        tooltip.style.top = e.pageY - 20 + 'px';
+      });
     });
   </script>
 </body>
 </html>
-
-
