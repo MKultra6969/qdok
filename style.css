@@ -11,9 +11,8 @@ html, body { height:100%; font-family: 'Montserrat', sans-serif; color:#fff; ove
   height: 100%;
   object-fit: cover;
   z-index: -2;
-filter:brightness(0.5) saturate(1.05)
+  filter: brightness(0.5) saturate(1.05);
 }
-
 
 /* Стартовый экран */
 #start-screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; backdrop-filter:blur(6px); background:rgba(0,0,0,0.55); z-index:30; cursor:pointer; transition:opacity .45s ease; }
@@ -34,12 +33,25 @@ filter:brightness(0.5) saturate(1.05)
 .name { font-size:1.4rem; display:flex; align-items:center; gap:6px; margin-bottom:6px; }
 .bio { color:#ddd; opacity:.9; }
 
-/* Иконка администратора с пульсацией */
-@keyframes pulse {0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); }}
-.admin-icon { display:inline-block; font-size:1rem; color:gold; cursor:pointer; position:relative; animation: pulse 2s infinite ease-in-out; }
+/* Иконки ролей с пульсацией */
+@keyframes pulse {0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+.role-icon { display:inline-block; font-size:1rem; cursor:pointer; margin-left:4px; animation: pulse 2s infinite ease-in-out; color:gold; }
 
-/* Tooltip с fade+slide */
-.tooltip { position:absolute; background:rgba(0,0,0,0.85); color:#fff; padding:6px 12px; border-radius:8px; font-size:0.75rem; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%, -10px); transition:opacity 0.25s ease, transform 0.25s ease; z-index:50; }
+/* Tooltip */
+.tooltip {
+  position:absolute;
+  background:rgba(0,0,0,0.85);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:0.75rem;
+  white-space:nowrap;
+  pointer-events:none;
+  opacity:0;
+  transform:translate(-50%, -10px);
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:50;
+}
 .tooltip.show { opacity:1; transform:translate(-50%, -20px); }
 
 /* Ссылки */
