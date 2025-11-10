@@ -20,19 +20,7 @@
     <source src="background.mp4" type="video/mp4" />
   </video>
 
-  <!-- Контрол громкости -->
-  <div class="volume-control hidden">
-    <button id="mute-btn">
-      <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20">
-        <path d="M3 9v6h4l5 5V4L7 9H3z"/>
-      </svg>
-      <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20" style="display:none;">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-      </svg>
-    </button>
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
-  </div>
-
+  <!-- Основной контент -->
   <div class="content hidden">
     <!-- Профиль -->
     <div class="profile-card">
@@ -51,16 +39,63 @@
     </div>
 
     <!-- Ссылки -->
-<div class="links">
-  <a href="https://t.me/chilavekrazzz" target="_blank" class="link">Telegram</a>
-  <a href="https://youtube.com/@upsetsummer" target="_blank" class="link">YouTube</a>
-  <a href="https://github.com/Interium-IB" target="_blank" class="link">GitHub</a>
-  <a href="https://ru.namemc.com/profile/festivesummer.1" target="_blank" class="link">NameMC</a>
-  <a href="https://laby.net/@festivesummer" target="_blank" class="link">LabyNet</a>
-  <a href="https://last.fm/user/upsetsummer" target="_blank" class="link">LastFM</a>
-  <a href="https://qdok.ru/efans" target="_blank" class="link exterafans">exterafans</a>
-</div>
-</div>
+    <div class="links">
+      <a href="https://t.me/chilavekrazzz" target="_blank" class="link">
+        <img src="icons/telegram.svg" alt="Telegram" class="icon"/>
+      </a>
+      <a href="https://youtube.com/@upsetsummer" target="_blank" class="link">
+        <img src="icons/youtube.svg" alt="YouTube" class="icon"/>
+      </a>
+      <a href="https://github.com/Interium-IB" target="_blank" class="link">
+        <img src="icons/github.svg" alt="GitHub" class="icon"/>
+      </a>
+      <a href="https://ru.namemc.com/profile/festivesummer.1" target="_blank" class="link">
+        <img src="icons/namemc.svg" alt="NameMC" class="icon"/>
+      </a>
+      <a href="https://laby.net/@festivesummer" target="_blank" class="link">
+        <img src="icons/labynet.svg" alt="LabyNet" class="icon"/>
+      </a>
+      <a href="https://last.fm/user/upsetsummer" target="_blank" class="link">
+        <img src="icons/lastfm.svg" alt="LastFM" class="icon"/>
+      </a>
+      <a href="https://qdok.ru/efans" target="_blank" class="link exterafans" title="ExteraFans">
+        <img src="exterafans.png" alt="ExteraFans" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Музыкальная панель -->
+  <div class="music-player hidden">
+    <!-- Play/Pause -->
+    <button id="play-btn">
+      <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24" style="display:none;">
+        <path d="M6 19h4V5H6zm8-14v14h4V5z"/>
+      </svg>
+    </button>
+
+    <!-- Track info и полоса трека -->
+    <div class="track-wrapper">
+      <div class="track-info">
+        <p class="track-title">Мои глаза сияют</p>
+        <p class="track-author">Locked23</p>
+      </div>
+      <input type="range" id="track-slider" min="0" max="100" step="1" value="0">
+    </div>
+
+    <!-- Громкость и mute -->
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2">
+    <button id="mute-btn">
+      <svg id="sound-on" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+      </svg>
+      <svg id="sound-off" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24" style="display:none;">
+        <path d="M16.5 12L19 9.5 17.59 8.09 15.09 10.59 12.59 8.09 11.18 9.5 13.68 12 11.18 14.5 12.59 15.91 15.09 13.41 17.59 15.91 19 14.5 16.5 12zM3 9v6h4l5 5V4L7 9H3z"/>
+      </svg>
+    </button>
+  </div>
 
   <audio id="bg-music" src="music.mp3" loop></audio>
 
@@ -69,45 +104,50 @@
     const content = document.querySelector('.content');
     const audio = document.getElementById('bg-music');
     const video = document.getElementById('bg-video');
+
     const volumeSlider = document.getElementById('volume-slider');
-    const volumeControl = document.querySelector('.volume-control');
     const muteBtn = document.getElementById('mute-btn');
+    const soundOn = document.getElementById('sound-on');
+    const soundOff = document.getElementById('sound-off');
+
+    const playBtn = document.getElementById('play-btn');
     const playIcon = document.getElementById('play-icon');
     const pauseIcon = document.getElementById('pause-icon');
+    const trackSlider = document.getElementById('track-slider');
+
+    const musicPlayer = document.querySelector('.music-player');
 
     let isMuted = false;
+    let isPlaying = false;
 
-    // Стартовый экран
     startScreen.addEventListener('click', () => {
       startScreen.classList.add('fade-out');
       setTimeout(() => {
         startScreen.style.display = 'none';
         content.classList.remove('hidden');
         content.classList.add('fade-in');
-        volumeControl.classList.remove('hidden');
+        musicPlayer.classList.remove('hidden');
         video.play().catch(() => {});
-        audio.volume = 0.3;
+        audio.volume = 0.2;
         audio.play().catch(() => {});
-        updateIcons();
+        isPlaying = true;
+        updatePlayIcons();
       }, 700);
     });
 
-    // Регулировка громкости (не отключаем звук)
-    volumeSlider.addEventListener('input', () => {
-      audio.volume = volumeSlider.value;
-      audio.muted = isMuted; // mute влияет только кнопка
-      updateIcons();
+    // Play/Pause
+    playBtn.addEventListener('click', () => {
+      if(isPlaying){
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      isPlaying = !isPlaying;
+      updatePlayIcons();
     });
 
-    // Вкл/выкл звук
-    muteBtn.addEventListener('click', () => {
-      isMuted = !isMuted;
-      audio.muted = isMuted;
-      updateIcons();
-    });
-
-    function updateIcons() {
-      if (isMuted) {
+    function updatePlayIcons(){
+      if(isPlaying){
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
       } else {
@@ -116,7 +156,38 @@
       }
     }
 
-    // Tooltip для ролей
+    // Mute
+    muteBtn.addEventListener('click', () => {
+      isMuted = !isMuted;
+      audio.muted = isMuted;
+      updateMuteIcons();
+    });
+
+    function updateMuteIcons(){
+      if(isMuted){
+        soundOn.style.display = 'none';
+        soundOff.style.display = 'block';
+      } else {
+        soundOn.style.display = 'block';
+        soundOff.style.display = 'none';
+      }
+    }
+
+    // Volume slider
+    volumeSlider.addEventListener('input', () => {
+      if(!isMuted) audio.volume = volumeSlider.value;
+    });
+
+    // Track slider
+    trackSlider.addEventListener('input', () => {
+      audio.currentTime = (trackSlider.value / 100) * audio.duration;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      trackSlider.value = (audio.currentTime / audio.duration) * 100;
+    });
+
+    // Role tooltips
     document.addEventListener('DOMContentLoaded', () => {
       const roleIcons = document.querySelectorAll('.role-icon');
       const tooltip = document.createElement('div');
@@ -131,9 +202,7 @@
           tooltip.style.left = rect.left + rect.width/2 + 'px';
           tooltip.style.top = rect.top - 20 + 'px';
         });
-        icon.addEventListener('mouseleave', () => {
-          tooltip.classList.remove('show');
-        });
+        icon.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
         icon.addEventListener('mousemove', (e) => {
           tooltip.style.left = e.pageX + 'px';
           tooltip.style.top = e.pageY - 20 + 'px';
