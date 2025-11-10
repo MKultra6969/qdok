@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>exterafans Info</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1a1a1a;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    .message {
+      max-width: 600px;
+      text-align: left;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 16px;
+    }
+
+    .line {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="message">
+    <div class="line" style="animation-delay: 0s"><strong><a href="https://t.me/exterafans">Телеграм exterafans.</a>
+<a href="https://t.me/exterafans_bot">Бот exterafans.</a>
+<a href="https://qdok.ru/words">Запрещенные слова.</a></strong></div>
+    <div class="line" style="animation-delay: 0.3s"><strong>Правила написания заявки боту:</strong></div>
+    <div class="line" style="animation-delay: 0.6s">1. В сообщении обязательно должен быть твой @username.</div>
+    <div class="line" style="animation-delay: 0.9s">2. Текст после юзернейма не должен превышать 25 символов.</div>
+    <div class="line" style="animation-delay: 1.2s">3. Без жести (заявка будет отклонена автоматически).</div>
+    <div class="line" style="animation-delay: 1.5s"><strong>Пример:</strong></div>
+    <div class="line" style="animation-delay: 1.8s">[Текст твоей заявки @твой_username] {доп. инфо}</div>
+    <div class="line" style="animation-delay: 2.1s"><em>[] - обязательно, {} - по желанию</em></div>
+  </div>
+</body>
+</html>
