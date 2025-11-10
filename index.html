@@ -45,9 +45,7 @@
           <span class="role-icon" data-role="Staff">🏢</span>
           <span class="role-icon" data-role="Donater">💎</span>
           <span class="role-icon" data-role="Halloween">🎃</span>
-  <!-- Кнопка Exterafans -->
-  <a href="https://qdok.ru/efans" target="_blank" class="exterafans-btn">Exterafans</a>
-</h2>
+          <a href="https://qdok.ru/efans" target="_blank" class="role-button">exterafans</a>
         </h2>
         <p class="bio">БЭНГЕР.</p>
       </div>
@@ -94,12 +92,10 @@
       }, 700);
     });
 
-    // Регулировка громкости
+    // Регулировка громкости (не отключаем звук)
     volumeSlider.addEventListener('input', () => {
       audio.volume = volumeSlider.value;
-      if (audio.volume === 0) isMuted = true;
-      else if (!isMuted) isMuted = false;
-      audio.muted = isMuted;
+      audio.muted = isMuted; // mute влияет только кнопка
       updateIcons();
     });
 
@@ -111,7 +107,7 @@
     });
 
     function updateIcons() {
-      if (isMuted || audio.volume === 0) {
+      if (isMuted) {
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
       } else {
