@@ -37,13 +37,18 @@ jobs:
       env:
         NODE_ENV: production
 
+    - name: Prepare deployment structure
+      run: |
+        mkdir -p ../deploy/efans
+        cp -r dist/* ../deploy/efans/
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'efans/dist'
+        path: 'deploy'
 
     - name: Deploy to GitHub Pages
       id: deployment
