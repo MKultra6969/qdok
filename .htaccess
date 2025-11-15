@@ -10,3 +10,16 @@
     frame-ancestors 'self';
   "
 </IfModule>
+
+# Правила для SPA роутинга
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Разрешить доступ к реальным файлам и директориям
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # Для SPA efans - перенаправить все запросы на index.html внутри директории efans
+  RewriteCond %{REQUEST_URI} ^/efans/
+  RewriteRule ^efans/(.*)$ /efans/index.html [L]
+</IfModule>

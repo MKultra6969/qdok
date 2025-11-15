@@ -44,11 +44,12 @@ jobs:
         # Копируем корневые файлы
         cp $GITHUB_WORKSPACE/index.html $GITHUB_WORKSPACE/deploy/
         cp $GITHUB_WORKSPACE/style.css $GITHUB_WORKSPACE/deploy/
+        cp $GITHUB_WORKSPACE/.htaccess $GITHUB_WORKSPACE/deploy/
         cp $GITHUB_WORKSPACE/favicon.ico $GITHUB_WORKSPACE/deploy/ || true
         cp $GITHUB_WORKSPACE/CNAME $GITHUB_WORKSPACE/deploy/ || true
         cp $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/deploy/ || true
         
-        # Копируем собранный efans (dist уже содержит правильную структуру с base='/efans/')
+        # Копируем собранный efans (dist содержит правильную структуру с base='/efans/')
         cp -r dist $GITHUB_WORKSPACE/deploy/efans
         
         # Копируем другие директории

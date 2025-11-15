@@ -1,3 +1,12 @@
 RewriteEngine On
-RewriteRule ^index\.html$ / [R=301,L]
-RewriteRule ^(.*)/index\.html$ /$1/ [R=301,L]
+RewriteBase /exterafans/
+
+# Редирект с index.html на директорию
+RewriteRule ^index\.html$ /exterafans/ [R=301,L]
+
+# Разрешить доступ к реальным файлам и директориям
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Перенаправить все запросы на index.html в директории exterafans
+RewriteRule ^(.*)$ /exterafans/index.html [L]
